@@ -10,6 +10,10 @@ public class Main
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        JPanel panel = new JPanel();
+        frame.add(panel);
+        panel.setVisible(true);
+
         frame.setVisible(true);
 
 
