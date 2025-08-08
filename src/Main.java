@@ -1,6 +1,5 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 
 public class Main
 {
@@ -13,12 +12,18 @@ public class Main
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel(new GridLayout(2, 1, 0, 0));
+
+        JLabel lblTopHalf = new JLabel("Test");
+
+        Font currentFont = lblTopHalf.getFont();
+
+        lblTopHalf.setFont(new Font(currentFont.getName(), currentFont.getStyle(), 32));
+        lblTopHalf.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTopHalf.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panel.add(lblTopHalf);
+
         frame.add(panel);
-        panel.setVisible(true);
-
         frame.setVisible(true);
-
-
 
     }
 
