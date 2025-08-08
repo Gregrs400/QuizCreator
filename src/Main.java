@@ -1,4 +1,6 @@
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.GridLayout;
 
 public class Main
 {
@@ -10,7 +12,7 @@ public class Main
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new GridLayout(2, 1, 0, 0));
         frame.add(panel);
         panel.setVisible(true);
 
