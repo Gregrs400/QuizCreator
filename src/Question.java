@@ -93,17 +93,17 @@ public class Question
         gbc.ipady = 0;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weighty = 0.5;
+        gbc.weighty = 0.3;
         guiLayout.add(topPanel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weighty = 1;
+        gbc.weighty = 2;
         guiLayout.add(bottomPanel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.weighty = 0.2;
+        gbc.weighty = 0.1;
         guiLayout.add(pnlQuizControlPanel, gbc);
 
     }
