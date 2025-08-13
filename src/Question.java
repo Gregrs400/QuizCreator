@@ -5,9 +5,10 @@ import java.util.HashMap;
 public class Question
 {
 
-    private final JPanel guiLayout = new JPanel(new GridLayout(2, 1, 0, 0));
+    private final JPanel guiLayout = new JPanel(new GridBagLayout());
     HashMap<String, String> promptsAndAnswers;
     HashMap<String, JTextField> userAnswers = new HashMap<>();
+    GridBagConstraints gbc = new GridBagConstraints();
 
     public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers)
     {
@@ -32,7 +33,6 @@ public class Question
 
             // Scrollable content panel for acronyms
             JPanel acronymListPanel = new JPanel(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(5, 10, 5, 10);
             gbc.anchor = GridBagConstraints.WEST;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -66,8 +66,45 @@ public class Question
 
         }
 
-        guiLayout.add(topPanel);
-        guiLayout.add(bottomPanel);
+        JPanel pnlQuizControlPanel = new JPanel(new GridBagLayout());
+
+        JButton btnPreviousQuestion = new JButton("<");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.ipadx = 20;
+        gbc.ipady = 20;
+        pnlQuizControlPanel.add(btnPreviousQuestion, gbc);
+
+        JButton btnEnd = new JButton("End");
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 20;
+        gbc.ipady = 20;
+        pnlQuizControlPanel.add(btnEnd, gbc);
+
+        JButton btnNextQuestion = new JButton(">");
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.ipadx = 20;
+        gbc.ipady = 20;
+        pnlQuizControlPanel.add(btnNextQuestion, gbc);
+
+        gbc.ipadx = 0;
+        gbc.ipady = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weighty = 0.5;
+        guiLayout.add(topPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weighty = 1;
+        guiLayout.add(bottomPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weighty = 0.2;
+        guiLayout.add(pnlQuizControlPanel, gbc);
 
     }
 
