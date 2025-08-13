@@ -6,9 +6,13 @@ public class Question
 {
 
     private final JPanel guiLayout = new JPanel(new GridLayout(2, 1, 0, 0));
+    HashMap<String, String> promptsAndAnswers;
+    HashMap<String, JTextField> userAnswers = new HashMap<>();
 
     public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers)
     {
+
+        this.promptsAndAnswers = promptsAndAnswers;
 
         // ---------- TOP HALF ----------
         JLabel questionLabel = new JLabel(title);
@@ -49,6 +53,7 @@ public class Question
 
                 gbc.gridx = 1;
                 JTextField field = new JTextField(20);
+                userAnswers.put(prompts[i], field);
                 acronymListPanel.add(field, gbc);
 
             }
