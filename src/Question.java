@@ -68,8 +68,18 @@ public class Question
         else if (questionType.equals("Term or Definition"))
         {
 
-            JTextArea txtBottomHalf = new JTextArea();
-            bottomPanel.add(txtBottomHalf);
+            JTextField txtBottomHalf = new JTextField();
+
+            bottomPanel.setLayout(new GridBagLayout());
+            GridBagConstraints gbc2 = new GridBagConstraints();
+            gbc2.gridx = 0;
+            gbc2.gridy = 0;
+            gbc2.fill = GridBagConstraints.BOTH;
+            gbc2.weightx = 1.0;
+            gbc2.weighty = 1.0;
+
+            bottomPanel.add(txtBottomHalf, gbc2);
+
             txtBottomHalf.setEditable(true);
         }
 
@@ -105,7 +115,9 @@ public class Question
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weighty = 2;
+        gbc.weightx = 1.0;             // ensure horizontal stretching
+        gbc.weighty = 2.0;             // keep your vertical weight
+        gbc.fill = GridBagConstraints.BOTH; // stretch in both directions
         guiLayout.add(bottomPanel, gbc);
 
         gbc.gridx = 0;
