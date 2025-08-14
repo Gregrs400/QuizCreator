@@ -52,9 +52,12 @@ public class Question
                 acronymListPanel.add(acronymLabel, gbc);
 
                 gbc.gridx = 1;
-                JTextField field = new JTextField(20);
+                gbc.fill = GridBagConstraints.HORIZONTAL; // or BOTH if you want taller fields
+                gbc.weightx = 1.0; // let column stretch
+                JTextField field = new JTextField();
                 userAnswers.put(prompts[i], field);
                 acronymListPanel.add(field, gbc);
+
 
             }
 

@@ -24,7 +24,7 @@ public class Main {
                         testTermOrDefinitionContent);
 
 
-        frame.add(testTermOrDefinition.getGuiLayout());
+        frame.add(testAcronymOrFullTerm.getGuiLayout());
 
         frame.setVisible(true);
     }
