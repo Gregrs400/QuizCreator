@@ -14,12 +14,17 @@ public class Main {
         testQuestionPromptsAndAnswers.put("WAN", "Wide Area Network");
         testQuestionPromptsAndAnswers.put("IDS", "Intrusion Detection System");
         testQuestionPromptsAndAnswers.put("IPS", "Intrusion Prevention System");
-        Question testTermOrFullTerm = new Question("Acronym or Full Term",
+        Question testAcronymOrFullTerm = new Question("Acronym or Full Term",
                 "Network Component Acronyms",
                 testQuestionPromptsAndAnswers);
+        HashMap<String, String> testTermOrDefinitionContent = new HashMap<>();
+        testTermOrDefinitionContent.put("Multi-Factor Authentication", "Test");
+        Question testTermOrDefinition =
+                new Question("Term or Definition", "Multi-Factor Authentication",
+                        testTermOrDefinitionContent);
 
 
-        frame.add(testTermOrFullTerm.getGuiLayout());
+        frame.add(testTermOrDefinition.getGuiLayout());
 
         frame.setVisible(true);
     }

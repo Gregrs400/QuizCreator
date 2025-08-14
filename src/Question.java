@@ -26,7 +26,7 @@ public class Question
 
         // ---------- BOTTOM HALF ----------
         JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.BLACK));
+        // bottomPanel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.BLACK));
 
         if (questionType.equals("Acronym or Full Term"))
         {
@@ -64,6 +64,13 @@ public class Question
 
             bottomPanel.add(scrollPane, BorderLayout.CENTER);
 
+        }
+        else if (questionType.equals("Term or Definition"))
+        {
+
+            JTextArea txtBottomHalf = new JTextArea();
+            bottomPanel.add(txtBottomHalf);
+            txtBottomHalf.setEditable(true);
         }
 
         JPanel pnlQuizControlPanel = new JPanel(new GridBagLayout());
