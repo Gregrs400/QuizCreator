@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
@@ -6,6 +7,8 @@ public class Main {
         JFrame frame = new JFrame("Quiz Question");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        ArrayList<Question> questions = new ArrayList<>();
 
         HashMap<String, String> testQuestionPromptsAndAnswers = new HashMap<>();
 
@@ -16,13 +19,16 @@ public class Main {
         testQuestionPromptsAndAnswers.put("IPS", "Intrusion Prevention System");
         Question testAcronymOrFullTerm = new Question("Acronym or Full Term",
                 "Network Component Acronyms",
-                testQuestionPromptsAndAnswers);
+                testQuestionPromptsAndAnswers, questions);
+
+        questions.add(testAcronymOrFullTerm);
+
         HashMap<String, String> testTermOrDefinitionContent = new HashMap<>();
         testTermOrDefinitionContent.put("Multi-Factor Authentication", "Test");
         Question testTermOrDefinition =
                 new Question("Term or Definition", "Multi-Factor Authentication",
-                        testTermOrDefinitionContent);
-
+                        testTermOrDefinitionContent, questions);
+        questions.add(testTermOrDefinition);
 
         frame.add(testAcronymOrFullTerm.getGuiLayout());
 

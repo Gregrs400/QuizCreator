@@ -1,19 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Question
 {
 
     private final JPanel guiLayout = new JPanel(new GridBagLayout());
-    HashMap<String, String> promptsAndAnswers;
-    HashMap<String, JTextField> userAnswers = new HashMap<>();
+    private final HashMap<String, String> promptsAndAnswers;
+    private final HashMap<String, JTextField> userAnswers = new HashMap<>();
     GridBagConstraints gbc = new GridBagConstraints();
+    ArrayList<Question> questions = new ArrayList<>();
 
-    public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers)
+    public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers,
+                    ArrayList<Question> questions)
     {
 
         this.promptsAndAnswers = promptsAndAnswers;
+        this.questions = questions;
 
         // ---------- TOP HALF ----------
         JLabel questionLabel = new JLabel(title);
