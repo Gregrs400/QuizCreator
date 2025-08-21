@@ -10,7 +10,7 @@ public class Question
 
     private final JPanel guiLayout = new JPanel(new GridBagLayout());
     private final HashMap<String, String> promptsAndAnswers;
-    private final HashMap<String, JTextField> userAnswers = new HashMap<>();
+    private final ArrayList<PromptAndAnswer> userAnswers = new ArrayList<>();
     GridBagConstraints gbc = new GridBagConstraints();
 
     public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers)
@@ -58,7 +58,7 @@ public class Question
                 gbc.fill = GridBagConstraints.HORIZONTAL; // or BOTH if you want taller fields
                 gbc.weightx = 1.0; // let column stretch
                 JTextField field = new JTextField();
-                userAnswers.put(prompts[i], field);
+                userAnswers.add(new PromptAndAnswer(prompts[i], field));
                 acronymListPanel.add(field, gbc);
 
 
