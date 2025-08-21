@@ -7,7 +7,7 @@ public class PromptAndAnswer
     private JTextField answerField;
 
     public String getQuestionString() { return questionString; }
-    public JTextField getUserAnswer() { return answerField; }
+    public String getUserAnswer() { return answerField.getText(); }
 
     public PromptAndAnswer(String prompt, JTextField answerField)
     {

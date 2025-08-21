@@ -82,7 +82,17 @@ public class Main {
         pnlQuizControlPanel.add(btnEnd, gbc);
         btnEnd.addActionListener(e -> {
 
-            System.out.println("End");
+            for (Question question : questions)
+            {
+
+                for (PromptAndAnswer answer : question.getUserAnswers())
+                {
+
+                    System.out.println(answer.getQuestionString() + "  |  " + answer.getUserAnswer());
+
+                }
+
+            }
 
         });
 
@@ -95,7 +105,7 @@ public class Main {
         btnNextQuestion.addActionListener(e -> {
             int currentIndex = questions.indexOf(currentQuestion);
             System.out.println("Current index: " + currentIndex);
-            if (currentIndex < questions.size())
+            if (currentIndex < questions.size()-1)
             {
 
                 currentIndex += 1;

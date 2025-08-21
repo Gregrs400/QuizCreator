@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -106,4 +104,6 @@ public class Question
     }
 
     public JPanel getGuiLayout() { return guiLayout; }
+
+    public ArrayList<PromptAndAnswer> getUserAnswers() { return userAnswers; }
 }
