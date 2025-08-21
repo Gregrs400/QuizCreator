@@ -12,17 +12,11 @@ public class Question
     private final HashMap<String, String> promptsAndAnswers;
     private final HashMap<String, JTextField> userAnswers = new HashMap<>();
     GridBagConstraints gbc = new GridBagConstraints();
-    ArrayList<Question> questions = new ArrayList<>();
-    private Question currentQuestion;
-    private JFrame frame;
 
-    public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers,
-                    ArrayList<Question> questions, JFrame frame)
+    public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers)
     {
 
         this.promptsAndAnswers = promptsAndAnswers;
-        this.questions = questions;
-        this.frame = frame;
 
         // ---------- TOP HALF ----------
         JLabel questionLabel = new JLabel(title);
@@ -48,8 +42,6 @@ public class Question
             gbc.weightx = 1.0;
 
             String[] prompts = promptsAndAnswers.keySet().toArray(new String[0]);
-
-            currentQuestion = this;
 
             for (int i = 0; i < prompts.length; i++)
             {

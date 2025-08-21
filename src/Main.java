@@ -27,7 +27,7 @@ public class Main {
         testQuestionPromptsAndAnswers.put("IPS", "Intrusion Prevention System");
         Question testAcronymOrFullTerm = new Question("Acronym or Full Term",
                 "Network Component Acronyms",
-                testQuestionPromptsAndAnswers, questions, frame);
+                testQuestionPromptsAndAnswers);
 
         questions.add(testAcronymOrFullTerm);
 
@@ -35,8 +35,17 @@ public class Main {
         testTermOrDefinitionContent.put("Multi-Factor Authentication", "Test");
         Question testTermOrDefinition =
                 new Question("Term or Definition", "Multi-Factor Authentication",
-                        testTermOrDefinitionContent, questions, frame);
+                        testTermOrDefinitionContent);
         questions.add(testTermOrDefinition);
+
+        HashMap<String, String> networkAcronyms = new HashMap<>();
+        networkAcronyms.put("WAN", "Wide Area Network");
+        networkAcronyms.put("PAN", "Personal Area Network");
+        networkAcronyms.put("MAN", "Metropolitan Area Network");
+        networkAcronyms.put("CAN", "Campus Area Network");
+        networkAcronyms.put("LAN", "Local Area Network");
+        Question networkAcronymsQuestion = new Question("Acronym or Full Term", "Network Acronyms", networkAcronyms);
+        questions.add(networkAcronymsQuestion);
 
         frame.add(testAcronymOrFullTerm.getGuiLayout());
 
