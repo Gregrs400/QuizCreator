@@ -59,22 +59,19 @@ public class Main {
         gbc.ipadx = 20;
         gbc.ipady = 20;
         pnlQuizControlPanel.add(btnPreviousQuestion, gbc);
-        btnPreviousQuestion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int currentIndex = questions.indexOf(currentQuestion);
-                System.out.println("Current index: " + currentIndex);
-                if (currentIndex > 0)
-                {
-                    currentIndex -= 1;
-                    frame.remove(currentQuestion.getGuiLayout());
-                    currentQuestion = questions.get(currentIndex);
-                    frame.add(currentQuestion.getGuiLayout());
-                    frame.validate();
-                    frame.repaint();
-                }
-
+        btnPreviousQuestion.addActionListener(e -> {
+            int currentIndex = questions.indexOf(currentQuestion);
+            System.out.println("Current index: " + currentIndex);
+            if (currentIndex > 0)
+            {
+                currentIndex -= 1;
+                frame.remove(currentQuestion.getGuiLayout());
+                currentQuestion = questions.get(currentIndex);
+                frame.add(currentQuestion.getGuiLayout());
+                frame.validate();
+                frame.repaint();
             }
+
         });
 
         JButton btnEnd = new JButton("End");
@@ -90,22 +87,19 @@ public class Main {
         gbc.ipadx = 20;
         gbc.ipady = 20;
         pnlQuizControlPanel.add(btnNextQuestion, gbc);
-        btnNextQuestion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int currentIndex = questions.indexOf(currentQuestion);
-                System.out.println("Current index: " + currentIndex);
-                if (currentIndex < questions.size())
-                {
+        btnNextQuestion.addActionListener(e -> {
+            int currentIndex = questions.indexOf(currentQuestion);
+            System.out.println("Current index: " + currentIndex);
+            if (currentIndex < questions.size())
+            {
 
-                    currentIndex += 1;
-                    frame.remove(currentQuestion.getGuiLayout());
-                    currentQuestion = questions.get(currentIndex);
-                    frame.add(currentQuestion.getGuiLayout());
-                    frame.validate();
-                    frame.repaint();
+                currentIndex += 1;
+                frame.remove(currentQuestion.getGuiLayout());
+                currentQuestion = questions.get(currentIndex);
+                frame.add(currentQuestion.getGuiLayout());
+                frame.validate();
+                frame.repaint();
 
-                }
             }
         });
 
