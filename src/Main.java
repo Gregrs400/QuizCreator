@@ -80,6 +80,11 @@ public class Main {
         gbc.ipadx = 20;
         gbc.ipady = 20;
         pnlQuizControlPanel.add(btnEnd, gbc);
+        btnEnd.addActionListener(e -> {
+
+            System.out.println("End");
+
+        });
 
         JButton btnNextQuestion = new JButton(">");
         gbc.gridx = 2;
