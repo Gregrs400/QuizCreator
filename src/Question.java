@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,13 +13,16 @@ public class Question
     private final HashMap<String, JTextField> userAnswers = new HashMap<>();
     GridBagConstraints gbc = new GridBagConstraints();
     ArrayList<Question> questions = new ArrayList<>();
+    private Question currentQuestion;
+    private JFrame frame;
 
     public Question(String questionType, String title, HashMap<String, String> promptsAndAnswers,
-                    ArrayList<Question> questions)
+                    ArrayList<Question> questions, JFrame frame)
     {
 
         this.promptsAndAnswers = promptsAndAnswers;
         this.questions = questions;
+        this.frame = frame;
 
         // ---------- TOP HALF ----------
         JLabel questionLabel = new JLabel(title);
@@ -43,6 +48,8 @@ public class Question
             gbc.weightx = 1.0;
 
             String[] prompts = promptsAndAnswers.keySet().toArray(new String[0]);
+
+            currentQuestion = this;
 
             for (int i = 0; i < prompts.length; i++)
             {
@@ -90,29 +97,6 @@ public class Question
             txtBottomHalf.setEditable(true);
         }
 
-        JPanel pnlQuizControlPanel = new JPanel(new GridBagLayout());
-
-        JButton btnPreviousQuestion = new JButton("<");
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.ipadx = 20;
-        gbc.ipady = 20;
-        pnlQuizControlPanel.add(btnPreviousQuestion, gbc);
-
-        JButton btnEnd = new JButton("End");
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.ipadx = 20;
-        gbc.ipady = 20;
-        pnlQuizControlPanel.add(btnEnd, gbc);
-
-        JButton btnNextQuestion = new JButton(">");
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.ipadx = 20;
-        gbc.ipady = 20;
-        pnlQuizControlPanel.add(btnNextQuestion, gbc);
-
         gbc.ipadx = 0;
         gbc.ipady = 0;
         gbc.gridx = 0;
@@ -126,11 +110,6 @@ public class Question
         gbc.weighty = 2.0;             // keep your vertical weight
         gbc.fill = GridBagConstraints.BOTH; // stretch in both directions
         guiLayout.add(bottomPanel, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weighty = 0.1;
-        guiLayout.add(pnlQuizControlPanel, gbc);
 
     }
 
