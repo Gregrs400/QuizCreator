@@ -88,7 +88,15 @@ public class Main {
                 for (PromptAndAnswer answer : question.getUserAnswers())
                 {
 
-                    System.out.println(answer.getQuestionString() + "  |  " + answer.getUserAnswer());
+                    if (!answer.getUserAnswer().equals(question.getPromptsAndAnswers().get(answer.getQuestionString())))
+                    {
+
+                        System.out.println("Question: " + answer.getQuestionString() + "  |  " + " Your Answer: "
+                                + answer.getUserAnswer()
+                                + " Incorrect. Correct Answer: "
+                                + question.getPromptsAndAnswers().get(answer.getQuestionString()));
+
+                    }
 
                 }
 

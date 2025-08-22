@@ -84,6 +84,8 @@ public class Question
 
             bottomPanel.add(txtBottomHalf, gbc2);
 
+            userAnswers.add(new PromptAndAnswer(title, txtBottomHalf));
+
             txtBottomHalf.setEditable(true);
         }
 
@@ -106,4 +108,7 @@ public class Question
     public JPanel getGuiLayout() { return guiLayout; }
 
     public ArrayList<PromptAndAnswer> getUserAnswers() { return userAnswers; }
+
+    public HashMap<String, String> getPromptsAndAnswers() { return promptsAndAnswers; }
+
 }
