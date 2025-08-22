@@ -10,6 +10,9 @@ public class Main {
     static Question currentQuestion;
     public static void main(String[] args) {
         JFrame frame = new JFrame("Quiz Question");
+        JPanel resultsPanel = new JPanel(new BorderLayout());
+        JTextArea resultsField = new JTextArea();
+        resultsField.setEditable(false);
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -82,6 +85,8 @@ public class Main {
         pnlQuizControlPanel.add(btnEnd, gbc);
         btnEnd.addActionListener(e -> {
 
+            StringBuilder resultsString = new StringBuilder();
+
             for (Question question : questions)
             {
 
@@ -91,16 +96,40 @@ public class Main {
                     if (!answer.getUserAnswer().equals(question.getPromptsAndAnswers().get(answer.getQuestionString())))
                     {
 
-                        System.out.println("Question: " + answer.getQuestionString() + "  |  " + " Your Answer: "
-                                + answer.getUserAnswer()
-                                + " Incorrect. Correct Answer: "
-                                + question.getPromptsAndAnswers().get(answer.getQuestionString()));
+                        resultsString
+                                .append("Question: ")
+                                .append(answer.getQuestionString())
+                                .append("  ----------  ")
+                                .append(" Your Answer: ")
+                                .append(answer.getUserAnswer())
+                                .append("  ----------   Correct Answer: ")
+                                .append(question.getPromptsAndAnswers().get(answer.getQuestionString()))
+                                .append("\n");
 
                     }
 
                 }
 
+                resultsString.append("\n");
+
             }
+
+            JScrollPane scrollPane = new JScrollPane(resultsField);
+            scrollPane.getVerticalScrollBar().setUnitIncrement(15);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+            Font resultsFieldCurrentFont = resultsField.getFont();
+
+            resultsField.setFont(new Font(resultsFieldCurrentFont.getName(),
+                    resultsFieldCurrentFont.getStyle(), 24));
+            resultsField.setText(resultsString.toString());
+            resultsPanel.add(scrollPane, BorderLayout.CENTER);
+            frame.remove(currentQuestion.getGuiLayout());
+            frame.remove(pnlQuizControlPanel);
+            frame.add(resultsPanel);
+            frame.validate();
+            frame.repaint();
 
         });
 

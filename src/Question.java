@@ -64,7 +64,7 @@ public class Question
 
             JScrollPane scrollPane = new JScrollPane(acronymListPanel);
             scrollPane.getVerticalScrollBar().setUnitIncrement(15);
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
             bottomPanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -72,7 +72,7 @@ public class Question
         else if (questionType.equals("Term or Definition"))
         {
 
-            JTextField txtBottomHalf = new JTextField();
+            JTextArea txtBottomHalf = new JTextArea();
 
             bottomPanel.setLayout(new GridBagLayout());
             GridBagConstraints gbc2 = new GridBagConstraints();

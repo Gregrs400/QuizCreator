@@ -1,15 +1,16 @@
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 
 public class PromptAndAnswer
 {
 
     private String questionString;
-    private JTextField answerField;
+    private JTextComponent answerField;
 
     public String getQuestionString() { return questionString; }
     public String getUserAnswer() { return answerField.getText(); }
 
-    public PromptAndAnswer(String prompt, JTextField answerField)
+    public PromptAndAnswer(String prompt, JTextComponent answerField)
     {
 
                questionString = prompt;
