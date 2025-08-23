@@ -1,6 +1,8 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Quiz
 {
@@ -39,6 +41,38 @@ public class Quiz
     }
 
     // file to string
+
+    public String readFromFile(File file)
+    {
+
+        StringBuilder fileString = new StringBuilder();
+
+        try
+        {
+
+            Scanner fileReader = new Scanner(file);
+
+            while (fileReader.hasNextLine())
+            {
+
+                fileString.append(fileReader.nextLine());
+                fileString.append(System.getProperty("line.separator"));
+
+            }
+
+            return fileString.toString();
+
+        }
+        catch (FileNotFoundException e)
+        {
+
+            e.printStackTrace();
+
+        }
+
+        return null;
+
+    }
 
     // parse string into data structure
 
