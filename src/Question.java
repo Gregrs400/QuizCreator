@@ -29,7 +29,7 @@ public class Question
         JPanel bottomPanel = new JPanel(new BorderLayout());
         // bottomPanel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.BLACK));
 
-        if (questionType.equals("Acronym or Full Term"))
+        if (questionType.equals("Acronym and Term"))
         {
 
             // Scrollable content panel for acronyms

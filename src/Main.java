@@ -10,48 +10,87 @@ public class Main {
     static Question currentQuestion;
     public static void main(String[] args) {
         JFrame frame = new JFrame("Quiz Question");
-        JPanel resultsPanel = new JPanel(new BorderLayout());
-        JTextArea resultsField = new JTextArea();
-        resultsField.setEditable(false);
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         Quiz test = createQuiz(frame, "src\\network+QuizContent");
 
-        frame.setVisible(true);
+    }
 
-        ArrayList<Question> questions;
+    public static Quiz createQuiz(Frame frame, String filePath)
+    {
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        Quiz quiz = new Quiz(filePath);
 
-        if (test != null)
-            if (!test.getQuestions().isEmpty())
-            {
-                currentQuestion = test.getQuestions().getFirst();
-                questions = test.getQuestions();
+        LinkedHashMap<String, ArrayList<Question>> questionMap = quiz.getQuestionMap();
 
+        ArrayList<String> sections = new ArrayList<>(questionMap.keySet());
+        ArrayList<JCheckBox> checkBoxes;
 
+        JPanel checkboxPanel = new JPanel();
+        checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
+
+        checkboxPanel.add(Box.createVerticalGlue());
+
+        checkBoxes = new ArrayList<>();
+        for (String section : sections) {
+            JCheckBox checkBox = new JCheckBox(section);
+            checkBox.setFont(new Font(checkBox.getFont().getName(), checkBox.getFont().getStyle(), 20));
+            checkBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+            checkBoxes.add(checkBox);
+            checkboxPanel.add(checkBox);
+        }
+
+        checkboxPanel.add(Box.createVerticalGlue());
+
+        // Scrollable checkbox panel
+        JScrollPane scrollPane = new JScrollPane(checkboxPanel);
+
+        // Outer wrapper with BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Add Start Quiz button at bottom
+        JButton startButton = new JButton("Start Quiz");
+        startButton.addActionListener(e -> {
+
+            // Collect selected sections
+            quiz.getQuestions().clear();
+            for (JCheckBox box : checkBoxes) {
+                if (box.isSelected()) {
+                    quiz.getQuestions().addAll(questionMap.get(box.getText()));
+                }
+            }
+
+            ArrayList<Question> questions = quiz.getQuestions();
+
+            if (!quiz.getQuestions().isEmpty()) {
+
+                // Remove the selection panel
+                frame.remove(mainPanel);
+
+                // Show the first question
+                currentQuestion = quiz.getQuestions().get(0);
+                frame.add(currentQuestion.getGuiLayout(), BorderLayout.CENTER);
+
+                // Create quiz control panel
                 JPanel pnlQuizControlPanel = new JPanel(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
 
                 JButton btnPreviousQuestion = new JButton("<");
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                gbc.ipadx = 20;
-                gbc.ipady = 20;
+                gbc.gridx = 0; gbc.gridy = 0; gbc.ipadx = 20; gbc.ipady = 20;
                 pnlQuizControlPanel.add(btnPreviousQuestion, gbc);
-                btnPreviousQuestion.addActionListener(e -> {
-                    int currentIndex = questions.indexOf(currentQuestion);
-                    System.out.println("Current index: " + currentIndex);
+                btnPreviousQuestion.addActionListener(ev -> {
+                    int currentIndex = quiz.getQuestions().indexOf(currentQuestion);
                     if (currentIndex > 0) {
-                        currentIndex -= 1;
                         frame.remove(currentQuestion.getGuiLayout());
-                        currentQuestion = questions.get(currentIndex);
-                        frame.add(currentQuestion.getGuiLayout());
-                        frame.validate();
+                        currentIndex -= 1;
+                        currentQuestion = quiz.getQuestions().get(currentIndex);
+                        frame.add(currentQuestion.getGuiLayout(), BorderLayout.CENTER);
+                        frame.revalidate();
                         frame.repaint();
                     }
-
                 });
 
                 JButton btnEnd = new JButton("End");
@@ -60,7 +99,7 @@ public class Main {
                 gbc.ipadx = 20;
                 gbc.ipady = 20;
                 pnlQuizControlPanel.add(btnEnd, gbc);
-                btnEnd.addActionListener(e -> {
+                btnEnd.addActionListener(f -> {
 
                     StringBuilder resultsString = new StringBuilder();
 
@@ -88,17 +127,20 @@ public class Main {
 
                     }
 
-                    JScrollPane scrollPane = new JScrollPane(resultsField);
-                    scrollPane.getVerticalScrollBar().setUnitIncrement(15);
-                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                    JTextArea resultsField = new JTextArea();
+                    JPanel resultsPanel = new JPanel(new BorderLayout());
+                    resultsField.setEditable(false);
+                    JScrollPane resultsScrollPane = new JScrollPane(resultsField);
+                    resultsScrollPane.getVerticalScrollBar().setUnitIncrement(15);
+                    resultsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                    resultsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
                     Font resultsFieldCurrentFont = resultsField.getFont();
 
                     resultsField.setFont(new Font(resultsFieldCurrentFont.getName(),
                             resultsFieldCurrentFont.getStyle(), 24));
                     resultsField.setText(resultsString.toString());
-                    resultsPanel.add(scrollPane, BorderLayout.CENTER);
+                    resultsPanel.add(resultsScrollPane, BorderLayout.CENTER);
                     frame.remove(currentQuestion.getGuiLayout());
                     frame.remove(pnlQuizControlPanel);
                     frame.add(resultsPanel);
@@ -107,64 +149,47 @@ public class Main {
 
                 });
 
+
                 JButton btnNextQuestion = new JButton(">");
-                gbc.gridx = 2;
-                gbc.gridy = 0;
-                gbc.ipadx = 20;
-                gbc.ipady = 20;
+                gbc.gridx = 2; gbc.gridy = 0;
                 pnlQuizControlPanel.add(btnNextQuestion, gbc);
-                btnNextQuestion.addActionListener(e -> {
-                    int currentIndex = questions.indexOf(currentQuestion);
-                    System.out.println("Current index: " + currentIndex);
-                    if (currentIndex < questions.size() - 1) {
-
-                        currentIndex += 1;
+                btnNextQuestion.addActionListener(ev -> {
+                    int currentIndex = quiz.getQuestions().indexOf(currentQuestion);
+                    if (currentIndex < quiz.getQuestions().size() - 1) {
                         frame.remove(currentQuestion.getGuiLayout());
-                        currentQuestion = questions.get(currentIndex);
-                        frame.add(currentQuestion.getGuiLayout());
-                        frame.validate();
+                        currentIndex += 1;
+                        currentQuestion = quiz.getQuestions().get(currentIndex);
+                        frame.add(currentQuestion.getGuiLayout(), BorderLayout.CENTER);
+                        frame.revalidate();
                         frame.repaint();
-
                     }
                 });
 
+                // Add quiz control panel to the bottom of the frame
                 frame.add(pnlQuizControlPanel, BorderLayout.SOUTH);
 
-                frame.setVisible(true);
-                
+                // Refresh frame
+                frame.revalidate();
+                frame.repaint();
             }
-    }
+        });
 
-    public static Quiz createQuiz(Frame frame, String filePath)
-    {
+        startButton.setPreferredSize(new Dimension(200, 60));
+        startButton.setFont(new Font(startButton.getFont().getName(), Font.BOLD, 20));
 
-        Quiz quiz = new Quiz(filePath);
+        // Wrap the button in a panel to center it
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(startButton);
 
-        ArrayList<String> sections = new ArrayList<>(quiz.getQuestionMap().keySet());
-        ArrayList<JCheckBox> checkBoxes;
+        // Add the button panel to the bottom of the main panel
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        JPanel checkboxPanel = new JPanel();
-        checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
+        // Add outer panel to frame
+        frame.add(mainPanel, BorderLayout.CENTER);
 
-        checkboxPanel.add(Box.createVerticalGlue());
+        frame.setVisible(true);
 
-        checkBoxes = new ArrayList<>();
-        for (String section : sections) {
-            JCheckBox checkBox = new JCheckBox(section);
-            checkBox.setFont(new Font(checkBox.getFont().getName(), checkBox.getFont().getStyle(), 20));
-            checkBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-            checkBoxes.add(checkBox);
-            checkboxPanel.add(checkBox);
-        }
-
-        checkboxPanel.add(Box.createVerticalGlue());
-
-        JScrollPane scrollPane = new JScrollPane(checkboxPanel);
-        frame.add(scrollPane, BorderLayout.CENTER);
-
-        // choose which sections to be included in quiz
-
-        return null;
+        return quiz;
 
     }
 }

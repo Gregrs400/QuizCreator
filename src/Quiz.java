@@ -9,6 +9,16 @@ public class Quiz
 {
 
     private ArrayList<Question> questions = new ArrayList<>();
+    private LinkedHashMap<String, ArrayList<Question>> questionMap = new LinkedHashMap<>();
+
+    public Quiz(String filePath)
+    {
+
+        File quizContentFile = createOrAccessFile(filePath);
+        String quizContentString = readFromFile(quizContentFile);
+        questionMap = quizFromString(quizContentString);
+
+    }
 
     // open file
 
@@ -127,25 +137,15 @@ public class Quiz
 
                     String[] arrCurrentQuestionContent = currentQuestionContent.split(";");
 
-                    int questionIndex = 0;
-                    String currentQuestionPrompt = "";
+                    String currentQuestionPrompt;
                     String currentQuestionAnswer;
 
                     for (String s : arrCurrentQuestionContent)
                     {
 
-                        if (questionIndex == 0) {
-                            currentQuestionPrompt = s.split(",")[0].trim();
-                            questionIndex++;
-                            continue;
-                        }
-
-                        if (questionIndex == 1) {
-                            currentQuestionAnswer = s.split(",")[1].trim();
-                            currentQuestionPromptsAndAnswers.put(currentQuestionPrompt, currentQuestionAnswer);
-                            questionIndex = 0;
-                        }
-
+                        currentQuestionPrompt = s.split(",")[0].trim();
+                        currentQuestionAnswer = s.split(",")[1].trim();
+                        currentQuestionPromptsAndAnswers.put(currentQuestionPrompt, currentQuestionAnswer);
 
                     }
 
@@ -170,23 +170,15 @@ public class Quiz
 
     // convert data structure into quiz object
 
-    public Quiz createQuiz(String filePath)
-    {
-
-        File quizContentFile = createOrAccessFile(filePath);
-        String quizContentString = readFromFile(quizContentFile);
-        LinkedHashMap<String, ArrayList<Question>> quizQuestions = quizFromString(quizContentString);
-        // choose which sections to be included in quiz
-        // questions = chooseQuizContent(quizQuestions);
-        return null;
-
-    }
-
     public ArrayList<Question> chooseQuizContent(LinkedHashMap<String, ArrayList<Question>> questions)
     {
 
         return null;
 
     }
+
+    public LinkedHashMap<String, ArrayList<Question>> getQuestionMap() { return questionMap; }
+
+    public ArrayList<Question> getQuestions() { return questions; }
 
 }
